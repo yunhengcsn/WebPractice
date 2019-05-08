@@ -15,7 +15,7 @@ import org.dom4j.io.XMLWriter;
 
 import practice1.domain.User;
 
-public class UserDao {
+public class UserDaoXML {
 	private String path = "D:\\users.xml";
 	
 	public void addUser(User user) {
@@ -26,15 +26,15 @@ public class UserDao {
 			Element userEle = root.addElement("user");
 			userEle.addAttribute("username", user.getUsername());
 			userEle.addAttribute("password", user.getPassword());
-			//±£´æÎÄµµ
-			//´´½¨Êä³ö¸ñÊ½
-			OutputFormat format = new OutputFormat("\t",true);//Ëõ½ø£¬Ê¹ÓÃ»»ĞĞ
-			format.setTrimText(true);//Çå³ıÔ­ÓĞ»»ĞĞËõ½ø
+			//ä¿å­˜æ–‡æ¡£
+			//åˆ›å»ºè¾“å‡ºæ ¼å¼
+			OutputFormat format = new OutputFormat("\t",true);//ç¼©è¿›ï¼Œä½¿ç”¨æ¢è¡Œ
+			format.setTrimText(true);//æ¸…é™¤åŸæœ‰æ¢è¡Œç¼©è¿›
 			//
 			XMLWriter writer = new XMLWriter(
 									new OutputStreamWriter(
 											(new FileOutputStream(path)),"UTF-8"),format);
-			writer.write(doc);//±£´ædocument¶Ô¶ÔÏó
+			writer.write(doc);//ä¿å­˜documentå¯¹å¯¹è±¡
 			writer.close();
 		}catch (Exception e) {
 			throw new RuntimeException();
@@ -45,10 +45,10 @@ public class UserDao {
 		SAXReader reader = new SAXReader();
 		try {
 			Document doc = reader.read(path);
-			//xpath²éÑ¯µÃµ½Element
+			//xpathæŸ¥è¯¢å¾—åˆ°Element
 			Element ele = (Element)doc.selectSingleNode("//user[@username='" + username + "']");
 			if(ele == null) return null;
-			//°ÑeleÊı¾İ·â×°½øUser¶ÔÏó
+			//æŠŠeleæ•°æ®å°è£…è¿›Userå¯¹è±¡
 			User user = new User();
 			user.setUsername(ele.attributeValue("username"));
 			user.setPassword(ele.attributeValue("password"));

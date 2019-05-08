@@ -1,26 +1,45 @@
 package practice1.test;
 
 import org.junit.Test;
-import practice1.dao.UserDao;
+
+import practice1.dao.UserDaoJDBC;
+import practice1.dao.UserDaoXML;
 import practice1.domain.User;
 /**
- * UserDaoµÄ²âÊÔÀà
+ * UserDaoçš„æµ‹è¯•ç±»
  * */
 public class UserDaoTest {
 	
 	@Test
 	public void testAddUser() {
-		UserDao userDao = new UserDao();
+		UserDaoXML userDao = new UserDaoXML();
 		User user = new User();
-		user.setUsername("Íõ´ó×³");
+		user.setUsername("ç‹å°äº”");
 		user.setPassword("1234");
 		userDao.addUser(user);
 	}
 	
 	@Test
 	public void testFindByName() {
-		UserDao userDao = new UserDao();
-		String name = "ÀîËÄ";
+		UserDaoXML userDao = new UserDaoXML();
+		String name = "æå››";
+		User user = userDao.findByName(name);
+		System.out.println(user);
+	}
+	@Test
+	public void testAddUserJDBC() {
+		UserDaoJDBC userDao = new UserDaoJDBC();
+		User user = new User();
+		user.setUsername("èµµå°ä¸€");
+		user.setPassword("1234");
+		userDao.addUser(user);
+	}
+	
+	@Test
+	public void testFindByNameJDBC() {
+		UserDaoJDBC userDao = new UserDaoJDBC();
+		String name = "æå››";
+		
 		User user = userDao.findByName(name);
 		System.out.println(user);
 	}

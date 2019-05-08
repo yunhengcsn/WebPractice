@@ -1,7 +1,7 @@
 package practice1.service;
 /**
- * ×Ô¶¨ÒåÒ»¸öÒì³£Àà
- * ¸ø³ö¸¸Àà¹¹ÔìÆ÷¼´¿É£¬·½±ã´´½¨¶ÔÏó
+ * è‡ªå®šä¹‰ä¸€ä¸ªå¼‚å¸¸ç±»
+ * ç»™å‡ºçˆ¶ç±»æž„é€ å™¨å³å¯ï¼Œæ–¹ä¾¿åˆ›å»ºå¯¹è±¡
  * */
 public class UserException extends Exception {
 

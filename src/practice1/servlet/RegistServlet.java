@@ -9,40 +9,40 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.itcast.commons.CommonUtils;
+import tools.commons.CommonUtils;
 import practice1.domain.User;
 import practice1.service.UserException;
 import practice1.service.UserService;
 
 public class RegistServlet extends HttpServlet {
 	/**
-	 * ·â×°±íµ¥Êı¾İµ½User¶ÔÏóÖĞ
+	 * å°è£…è¡¨å•æ•°æ®åˆ°Userå¯¹è±¡ä¸­
 	 * 
 	 * */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//ÉèÖÃpostÇëÇó×Ö·û±àÂë
+		//è®¾ç½®postè¯·æ±‚å­—ç¬¦ç¼–ç 
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		
 		UserService userService = new UserService();
 		
-		User form = CommonUtils.toBean(request.getParameterMap(), User.class);//mapÖĞ¼üµÄÃû³ÆÓëÊôĞÔÃû±ØĞëÒ»ÖÂ£¡£¡£¡
+		User form = CommonUtils.toBean(request.getParameterMap(), User.class);//mapä¸­é”®çš„åç§°ä¸å±æ€§åå¿…é¡»ä¸€è‡´ï¼ï¼ï¼
 		
-		//±íµ¥Ğ£Ñé
-		HashMap<String,String> errors = new HashMap<>();//×°ÔØ´íÎóĞÅÏ¢
+		//è¡¨å•æ ¡éªŒ
+		HashMap<String,String> errors = new HashMap<>();//è£…è½½é”™è¯¯ä¿¡æ¯
 		
 		String username = form.getUsername();
 		if(username == null || username.trim().isEmpty()) {
-			errors.put("username","ÓÃ»§Ãû²»ÄÜÎª¿Õ");
+			errors.put("username","ç”¨æˆ·åä¸èƒ½ä¸ºç©º");
 		} else if(username.length() < 3 || username.length() > 15) {
-			errors.put("username","ÓÃ»§Ãû³¤¶È±ØĞëÔÚ3~15Ö®¼ä");
+			errors.put("username","ç”¨æˆ·åé•¿åº¦å¿…é¡»åœ¨3~15ä¹‹é—´");
 		}
 		
 		String password = form.getPassword();
 		if(password == null || password.trim().isEmpty()) {
-			errors.put("password","ÃÜÂë²»ÄÜÎª¿Õ");
+			errors.put("password","å¯†ç ä¸èƒ½ä¸ºç©º");
 		} else if(password.length() < 3 || password.length() > 15) {
-			errors.put("password","ÃÜÂë³¤¶È±ØĞëÔÚ3~15Ö®¼ä");
+			errors.put("password","å¯†ç é•¿åº¦å¿…é¡»åœ¨3~15ä¹‹é—´");
 		}
 		
 		if(errors != null && errors.size() > 0) {
@@ -51,16 +51,16 @@ public class RegistServlet extends HttpServlet {
 			request.getRequestDispatcher("/user/regist.jsp").forward(request, response);
 			return;
 		}
-		//µ÷ÓÃuserServiceµÄregist·½·¨£¬´«µİform
-		//µÃµ½Òì³££º»ñÈ¡Òì³£ĞÅÏ¢£¬±£´æÖÁrequestÓò£¬×ª·¢ÖÁregist¡£jspÏÔÊ¾
-		//·ñÔòÊä³ö×¢²á³É¹¦
+		//è°ƒç”¨userServiceçš„registæ–¹æ³•ï¼Œä¼ é€’form
+		//å¾—åˆ°å¼‚å¸¸ï¼šè·å–å¼‚å¸¸ä¿¡æ¯ï¼Œä¿å­˜è‡³requeståŸŸï¼Œè½¬å‘è‡³registã€‚jspæ˜¾ç¤º
+		//å¦åˆ™è¾“å‡ºæ³¨å†ŒæˆåŠŸ
 		try {
 			userService.regist(form);
-			response.getWriter().print("<h1>×¢²á³É¹¦</h1></br> <a href='"+
-													request.getContextPath()+"/user/login.jsp"+"'>µã»÷µÇÂ¼</a>");//Â·¾¶ÒÔ/¿ªÍ·Ïà¶Ôµ±Ç°Ö÷»ú
+			response.getWriter().print("<h1>æ³¨å†ŒæˆåŠŸ</h1></br> <a href='"+
+													request.getContextPath()+"/user/login.jsp"+"'>ç‚¹å‡»ç™»å½•</a>");//è·¯å¾„ä»¥/å¼€å¤´ç›¸å¯¹å½“å‰ä¸»æœº
 		} catch (UserException e) {
 			request.setAttribute("msg", e.getMessage());
-			request.getRequestDispatcher("/user/regist.jsp").forward(request, response);//ÒÔ/¿ªÍ·£¬Â·¾¶Ïà¶ÔÓÚµ±Ç°ÏîÄ¿Â·¾¶
+			request.getRequestDispatcher("/user/regist.jsp").forward(request, response);//ä»¥/å¼€å¤´ï¼Œè·¯å¾„ç›¸å¯¹äºå½“å‰é¡¹ç›®è·¯å¾„
 		}
 		
 	}
